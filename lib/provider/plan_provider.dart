@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import '../models/data_layer.dart';
 
-class PlanProvider extends InheritedNotifier<ValueNotifier<Plan>> {
+/// InheritedNotifier yang kini menyimpan DAFTAR Plan (List<Plan>),
+/// sehingga bisa dipakai bersama oleh banyak screen.
+class PlanProvider extends InheritedNotifier<ValueNotifier<List<Plan>>> {
   const PlanProvider({
     super.key,
     required Widget child,
-    required ValueNotifier<Plan> notifier,
+    required ValueNotifier<List<Plan>> notifier,
   }) : super(child: child, notifier: notifier);
 
-  static ValueNotifier<Plan> of(BuildContext context) {
+  static ValueNotifier<List<Plan>> of(BuildContext context) {
     return context
         .dependOnInheritedWidgetOfExactType<PlanProvider>()!
         .notifier!;
