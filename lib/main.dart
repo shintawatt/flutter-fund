@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
-import './models/data_layer.dart';
-import './provider/plan_provider.dart';
-import './views/plan_creator_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'pages/todo_page.dart';
 
-void main() => runApp(const MasterPlanApp());
+void main() => runApp(const ProviderScope(child: MasterPlanApp()));
 
 class MasterPlanApp extends StatelessWidget {
   const MasterPlanApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // PlanProvider berada DI ATAS MaterialApp supaya semua screen
-    // (route yang di-push Navigator) bisa mengakses state yang sama.
-    return PlanProvider(
-      notifier: ValueNotifier<List<Plan>>(const []),
-      child: MaterialApp(
-        title: 'State management app',
-        theme: ThemeData(primarySwatch: Colors.blue),
-        home: const PlanCreatorScreen(),
-      ),
+    return MaterialApp(
+      title: 'Week 3 ToDo',
+      theme: ThemeData(colorSchemeSeed: Colors.teal, useMaterial3: true),
+      home: const TodoPage(),
     );
   }
 }
