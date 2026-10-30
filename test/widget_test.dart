@@ -1,30 +1,36 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+// Adjust this import to match your project package name
 import 'package:pml/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('ToDo Riverpod smoke test', (WidgetTester tester) async {
+    // Build our app wrapped in ProviderScope (already included in MyApp main.dart)
+    await tester.pumpWidget(const MasterPlanApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that the initial empty state text is displayed
+    expect(find.text('Belum ada tugas'), findsOneWidget);
+    expect(find.text('ToDo Riverpod'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
+    // Tap the floating action button to open the add dialog
     await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that the dialog appears
+    expect(find.text('Tugas baru'), findsOneWidget);
+
+    // Enter text into the task input field
+    await tester.enterText(find.byType(TextField), 'Beli Susu');
+    await tester.pumpAndSettle();
+
+    // Tap the 'Tambah' button to submit
+    await tester.tap(find.text('Tambah'));
+    await tester.pumpAndSettle();
+
+    // Verify that the new task item is visible and empty state is gone
+    expect(find.text('Belum ada tugas'), findsNothing);
+    expect(find.text('Beli Susu'), findsOneWidget);
   });
 }
