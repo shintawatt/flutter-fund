@@ -23,7 +23,7 @@ class _PlanCreatorScreenState extends State<PlanCreatorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // ganti dengan nama panggilan Anda
-      appBar: AppBar(title: const Text('Master Plans Namaku')),
+      appBar: AppBar(title: const Text('Master Plans')),
       body: Column(
         children: [
           _buildListCreator(),
